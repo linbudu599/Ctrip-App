@@ -41,7 +41,7 @@ class GridNavItem {
     return GridNavItem(
       startColor: json["startColor"],
       endColor: json["endColor"],
-      mainItem: json["mainItem"],
+      mainItem: CommonModel.fromJson(json["mainItem"]),
       item1: CommonModel.fromJson(json["item1"]),
       item2: CommonModel.fromJson(json["item2"]),
       item3: CommonModel.fromJson(json["item3"]),

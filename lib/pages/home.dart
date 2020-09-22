@@ -1,5 +1,8 @@
+import 'package:ctrip/model/home_model.dart';
 import "package:flutter/material.dart";
+import "dart:convert";
 import 'package:flutter_swiper/flutter_swiper.dart';
+import "package:ctrip/dao/home_dao.dart";
 
 const int APPBAR_SCROLL_OFFSET_MAX = 100;
 
@@ -12,6 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   double appBarOpacity = 0;
+  String resString = "";
 
   List<String> _imageURLs = [
     "http://www.devio.org/io/flutter_app/img/banner/100h10000000q7ght9352.jpg",
@@ -32,6 +36,37 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       appBarOpacity = alpha;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchSync();
+  }
+
+  _fetch() {
+    HomeDao.fetch().then((value) {
+      setState(() {
+        resString = json.encode(value);
+      });
+    }).catchError((e) {
+      setState(() {
+        resString = e.toString();
+      });
+    });
+  }
+
+  _fetchSync() async {
+    try {
+      HomeModel model = await HomeDao.fetch();
+      setState(() {
+        resString = json.encode(model);
+      });
+    } catch (e) {
+      setState(() {
+        resString = e.toString();
+      });
+    }
   }
 
   @override
@@ -64,7 +99,8 @@ class _HomePageState extends State<HomePage> {
                         },
                         pagination: SwiperPagination(),
                       )),
-                  Container(height: 800, child: ListTile(title: Text("芜湖!")))
+                  Container(
+                      height: 800, child: ListTile(title: Text(resString)))
                 ],
               ),
             )),

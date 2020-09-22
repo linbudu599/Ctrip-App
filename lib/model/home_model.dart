@@ -32,8 +32,12 @@ class HomeModel {
         subNavListJSON.map((i) => CommonModel.fromJson(i)).toList();
 
     return HomeModel(
-        localNavList: localNavList,
-        bannerList: bannerList,
-        subNavList: subNavList);
+      localNavList: localNavList,
+      bannerList: bannerList,
+      subNavList: subNavList,
+      config: ConfigModel.fromJson(json['config']),
+      gridNav: GridNavModel.fromJson(json['gridNav']),
+      salesBox: SalesBoxModel.fromJson(json['salesBox']),
+    );
   }
 }
