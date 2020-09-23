@@ -20,9 +20,9 @@ class HomeModel {
       this.salesBox});
 
   factory HomeModel.fromJson(Map<String, dynamic> json) {
-    dynamic localNavListJSON = json["localNavList"] as List;
-    dynamic bannerListJSON = json["bannerList"] as List;
-    dynamic subNavListJSON = json["subNavList"] as List;
+    var localNavListJSON = json["localNavList"] as List;
+    var bannerListJSON = json["bannerList"] as List;
+    var subNavListJSON = json["subNavList"] as List;
 
     List<CommonModel> localNavList =
         localNavListJSON.map((i) => CommonModel.fromJson(i)).toList();
@@ -39,5 +39,16 @@ class HomeModel {
       gridNav: GridNavModel.fromJson(json['gridNav']),
       salesBox: SalesBoxModel.fromJson(json['salesBox']),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "config": config,
+      "bannerList": bannerList,
+      "localNavList": localNavList,
+      "subNavList": subNavList,
+      "gridNav": gridNav,
+      "salesBox": salesBox
+    };
   }
 }

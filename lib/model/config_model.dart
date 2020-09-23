@@ -1,13 +1,13 @@
 class ConfigModel {
-  final String searchURL;
+  final String searchUrl;
 
-  ConfigModel({this.searchURL});
+  ConfigModel({this.searchUrl});
 
   factory ConfigModel.fromJson(Map<String, dynamic> json) {
-    return ConfigModel(searchURL: json['searchURL']);
+    return ConfigModel(searchUrl: json['searchUrl']);
   }
 
   Map<String, dynamic> toJson() {
-    return {searchURL: searchURL};
+    return {"searchUrl": searchUrl};
   }
 }
