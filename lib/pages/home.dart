@@ -1,13 +1,15 @@
+import "dart:convert";
+
+import "package:flutter/material.dart";
+import 'package:flutter_swiper/flutter_swiper.dart';
+
 import 'package:ctrip/model/common_model.dart';
 import 'package:ctrip/model/grid_nav_model.dart';
 import 'package:ctrip/model/home_model.dart';
-import "package:flutter/material.dart";
-import "dart:convert";
-import 'package:flutter_swiper/flutter_swiper.dart';
 import "package:ctrip/dao/home_dao.dart";
-import "package:ctrip/model/home_model.dart";
 import "package:ctrip/widget/grid_nav.dart";
 import "package:ctrip/widget/local_nav.dart";
+import "package:ctrip/widget/sub_nav.dart";
 
 const int APPBAR_SCROLL_OFFSET_MAX = 100;
 
@@ -23,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   String resString = "";
   List<CommonModel> localNavList = [];
   GridNavModel gridNavModel;
+  List<CommonModel> subNavList = [];
 
   List<String> _imageURLs = [
     "https://www.devio.org/io/flutter_app/img/banner/100h10000000q7ght9352.jpg",
@@ -70,6 +73,7 @@ class _HomePageState extends State<HomePage> {
         resString = json.encode(model.config);
         localNavList = model.localNavList;
         gridNavModel = model.gridNav;
+        subNavList = model.subNavList;
       });
     } catch (e) {
       setState(() {
@@ -118,6 +122,10 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(7, 0, 7, 4),
                         child: GridNav(gridNavModel: gridNavModel),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(7, 0, 7, 4),
+                        child: SubNav(subNavList: subNavList),
                       ),
                       Container(
                           height: 800, child: ListTile(title: Text(resString)))

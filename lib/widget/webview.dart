@@ -75,11 +75,12 @@ class _WebViewState extends State<WebView> {
 
   @override
   void dispose() {
-    super.dispose();
     _onURLChanged.cancel();
     _onStateChanged.cancel();
     _onHttpError.cancel();
+    // 销毁webview后才能去销毁页面
     webViewRef.dispose();
+    super.dispose();
   }
 
   bool hitMainUrl(String url) {
@@ -127,23 +128,28 @@ class _WebViewState extends State<WebView> {
     }
 
     return Container(
+        color: bgColor,
+        // padding: EdgeInsets.fromLTRB(0, 40, 0, 10),
         child: FractionallySizedBox(
-      widthFactor: 1,
-      child: Stack(
-        children: <Widget>[
-          GestureDetector(
-              child: Container(
-            margin: EdgeInsets.only(left: 10),
-            child: Icon(Icons.close, color: bgColor, size: 26),
-          )),
-          Positioned(
-              left: 0,
-              right: 0,
-              child: Center(
-                  child: Text(widget.title ?? "",
-                      style: TextStyle(color: bgColor, fontSize: 20))))
-        ],
-      ),
-    ));
+          widthFactor: 1,
+          child: Stack(
+            children: <Widget>[
+              GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(left: 10),
+                    child: Icon(Icons.close, color: bgColor, size: 26),
+                  )),
+              Positioned(
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                      child: Text(widget.title ?? "",
+                          style: TextStyle(color: bgColor, fontSize: 20))))
+            ],
+          ),
+        ));
   }
 }

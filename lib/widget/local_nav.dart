@@ -1,6 +1,7 @@
+import "package:flutter/material.dart";
+
 import 'package:ctrip/model/common_model.dart';
 import 'package:ctrip/widget/webview.dart';
-import "package:flutter/material.dart";
 
 class LocalNav extends StatelessWidget {
   const LocalNav({Key key, @required this.localNavList}) : super(key: key);

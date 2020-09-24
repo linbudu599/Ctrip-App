@@ -1,7 +1,8 @@
-import 'package:ctrip/model/common_model.dart';
-import 'package:ctrip/widget/webview.dart';
 import "package:flutter/material.dart";
+
+import 'package:ctrip/model/common_model.dart';
 import "package:ctrip/model/grid_nav_model.dart";
+import "package:ctrip/widget/gesture_wrapper.dart";
 
 class GridNav extends StatelessWidget {
   const GridNav({Key key, @required this.gridNavModel}) : super(key: key);
@@ -61,7 +62,7 @@ class GridNav extends StatelessWidget {
   }
 
   Widget _mainItem(BuildContext context, CommonModel model) {
-    return _gestureWrapper(
+    return gestureWrapper(
         context,
         Stack(alignment: AlignmentDirectional.topCenter, children: <Widget>[
           Image.network(
@@ -109,7 +110,7 @@ class GridNav extends StatelessWidget {
               border: Border(
                   left: borderSide,
                   bottom: isFirst ? borderSide : BorderSide.none)),
-          child: _gestureWrapper(
+          child: gestureWrapper(
               context,
               Center(
                 child: Text(model.title,
@@ -117,23 +118,6 @@ class GridNav extends StatelessWidget {
                     style: TextStyle(fontSize: 14, color: Colors.white)),
               ),
               model)),
-    );
-  }
-
-  Widget _gestureWrapper(
-      BuildContext context, Widget widget, CommonModel model) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => WebView(
-                      url: model.url,
-                      statusBarColor: model.statusBarColor,
-                      hideAppBar: model.hideAppBar,
-                    )));
-      },
-      child: widget,
     );
   }
 }
