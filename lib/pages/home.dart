@@ -1,4 +1,5 @@
 import 'package:ctrip/model/common_model.dart';
+import 'package:ctrip/model/grid_nav_model.dart';
 import 'package:ctrip/model/home_model.dart';
 import "package:flutter/material.dart";
 import "dart:convert";
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   double appBarOpacity = 0;
   String resString = "";
   List<CommonModel> localNavList = [];
+  GridNavModel gridNavModel;
 
   List<String> _imageURLs = [
     "https://www.devio.org/io/flutter_app/img/banner/100h10000000q7ght9352.jpg",
@@ -67,6 +69,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         resString = json.encode(model.config);
         localNavList = model.localNavList;
+        gridNavModel = model.gridNav;
       });
     } catch (e) {
       setState(() {
@@ -86,6 +89,7 @@ class _HomePageState extends State<HomePage> {
                 context: context,
                 // 监听滚动
                 child: NotificationListener(
+                  // ignore: missing_return
                   onNotification: (scrollNotification) {
                     // 只监听最外层的ListView滚动
                     if (scrollNotification is ScrollUpdateNotification &&
@@ -110,6 +114,10 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
                         child: LocalNav(localNavList: localNavList),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(7, 0, 7, 4),
+                        child: GridNav(gridNavModel: gridNavModel),
                       ),
                       Container(
                           height: 800, child: ListTile(title: Text(resString)))
