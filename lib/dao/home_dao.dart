@@ -1,10 +1,8 @@
 import "dart:async";
 import "dart:convert";
-import "../model/home_model.dart";
+import "package:ctrip/model/home_model.dart";
+import "package:ctrip/utils/constants.dart";
 import 'package:http/http.dart' as http;
-
-const String HOME_URL =
-    "https://www.devio.org/io/flutter_app/json/home_page.json";
 
 class HomeDao {
   static Future<HomeModel> fetch() async {

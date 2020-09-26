@@ -3,7 +3,7 @@ import 'dart:async';
 import "package:flutter/material.dart";
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
-final List<String> INTERCEPT_URLS = [
+const List<String> INTERCEPT_URLS = [
   'm.ctrip.com/',
   'm.ctrip.com/html5/',
   'm.ctrip.com/html5'

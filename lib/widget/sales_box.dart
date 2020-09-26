@@ -1,7 +1,9 @@
-import 'package:ctrip/widget/webview.dart';
 import "package:flutter/material.dart";
+
 import "package:ctrip/model/common_model.dart";
 import "package:ctrip/model/sales_box_model.dart";
+
+import 'package:ctrip/widget/webview.dart';
 
 import 'gesture_wrapper.dart';
 

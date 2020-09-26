@@ -53,12 +53,12 @@ class _BotNavigationViewState extends State<BotNavigationView>
         pageSnapping: false,
         reverse: false,
         onPageChanged: (int i) {
-          print(i);
+          // print(i);
         },
         controller: _controller,
         children: <Widget>[
           HomePage(),
-          SearchPage(),
+          SearchPage(hideLeft: true),
           CameraPage(),
           MyPage(),
         ],

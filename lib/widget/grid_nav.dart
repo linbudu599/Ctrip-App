@@ -55,7 +55,7 @@ class GridNav extends StatelessWidget {
       margin: isFirstItem ? null : EdgeInsets.only(top: 3),
       decoration: BoxDecoration(
 
-// 线性渐变
+          // 线性渐变
           gradient: LinearGradient(colors: [startColor, endColor])),
       child: Row(children: expandItems),
     );

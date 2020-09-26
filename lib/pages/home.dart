@@ -1,23 +1,24 @@
 import "dart:convert";
 
-import 'package:ctrip/model/sales_box_model.dart';
-import 'package:ctrip/widget/webview.dart';
+import 'package:ctrip/pages/search.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 import 'package:ctrip/model/common_model.dart';
 import 'package:ctrip/model/grid_nav_model.dart';
 import 'package:ctrip/model/home_model.dart';
+import 'package:ctrip/model/sales_box_model.dart';
 import "package:ctrip/dao/home_dao.dart";
+
 import "package:ctrip/widget/grid_nav.dart";
 import "package:ctrip/widget/local_nav.dart";
 import "package:ctrip/widget/sub_nav.dart";
 import "package:ctrip/widget/sales_box.dart";
 import "package:ctrip/widget/loading.dart";
 import "package:ctrip/widget/search_bar.dart";
+import 'package:ctrip/widget/webview.dart';
 
-const int APPBAR_SCROLL_OFFSET_MAX = 100;
-const String SEARCH_BAR_DEFAULT_TEXT = '网红打卡地 景点 酒店 美食';
+import "package:ctrip/utils/constants.dart";
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -38,7 +39,6 @@ class _HomePageState extends State<HomePage> {
   bool _loading = true;
 
   void _onScroll(double offset) {
-    print(offset);
     double alpha = offset / APPBAR_SCROLL_OFFSET_MAX;
     if (alpha < 0) {
       alpha = 0;
@@ -138,7 +138,6 @@ class _HomePageState extends State<HomePage> {
               imgURL = imgURL.replaceAll("http://", "https://");
             }
 
-            print(imgURL);
             return GestureDetector(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -224,7 +223,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _jumpToSearch() {}
+  _jumpToSearch() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => SearchPage()));
+  }
 
   _jumpToSpeak() {}
 }
