@@ -8,3 +8,26 @@ const String SEARCH_URL =
     'https://m.ctrip.com/restapi/h5api/globalsearch/search?source=mobileweb&action=mobileweb&keyword=';
 
 const String SEARCH_HINT = "搜索";
+
+const List<String> TYPES = [
+  'channelgroup',
+  'channelgs',
+  'channelplane',
+  'channeltrain',
+  'cruise',
+  'district',
+  'food',
+  'hotel',
+  'huodong',
+  'shop',
+  'sight',
+  'ticket',
+  'travelgroup'
+];
+
+const List<String> CHANNEL_TYPES = [
+  'channelgroup',
+  'channelgs',
+  'channelplane',
+  'channeltrain',
+];

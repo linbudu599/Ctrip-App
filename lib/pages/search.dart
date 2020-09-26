@@ -45,12 +45,6 @@ class Searchtate extends State<SearchPage> {
           ),
         ),
       ),
-      InkWell(
-          onTap: () {
-            // SearchDao.fetch("${widget.searchURL}" + "长城")
-            //     .then((SearchModel value) => {print(value.data[0].url)});
-          },
-          child: Text("Test"))
     ]));
   }
 
@@ -115,15 +109,22 @@ class Searchtate extends State<SearchPage> {
                   Border(bottom: BorderSide(width: 0.3, color: Colors.grey)),
             ),
             child: Row(children: <Widget>[
+              Container(
+                margin: EdgeInsets.all(1),
+                child: Image(
+                    height: 26,
+                    width: 26,
+                    image: AssetImage(_typeImg(item.type))),
+              ),
               Column(children: <Widget>[
                 Container(
                   width: 300,
-                  child: Text(
-                      '${item.word} ${item.districtname ?? ''} ${item.zonename ?? ''}'),
+                  child: _title(item),
                 ),
                 Container(
                   width: 300,
-                  child: Text('${item.price} ${item.type}'),
+                  margin: EdgeInsets.only(top: 5),
+                  child: _subTitle(item),
                 )
               ])
             ])),
@@ -133,5 +134,71 @@ class Searchtate extends State<SearchPage> {
               MaterialPageRoute(
                   builder: (context) => WebView(url: item.url, title: "详情")));
         });
+  }
+
+  String _typeImg(String type) {
+    String defaultPath = "travelgroup";
+
+    if (type == null) return "assets/images/type_$defaultPath.png";
+    for (final val in TYPES) {
+      if (type.contains(val)) {
+        defaultPath = val;
+        break;
+      }
+    }
+
+    return "assets/images/type_$defaultPath.png";
+  }
+
+  Widget _title(SearchItem item) {
+    if (item == null) return null;
+
+    List<TextSpan> spans = [];
+    spans.addAll(_keywordTextSpans(item.word, searchModel.keyword));
+    spans.add(TextSpan(
+        text: ' ' + (item.districtname ?? '') + ' ' + (item.zonename ?? ''),
+        style: TextStyle(fontSize: 16, color: Colors.grey)));
+    return RichText(text: TextSpan(children: spans));
+  }
+
+  Widget _subTitle(SearchItem item) {
+    return RichText(
+      text: TextSpan(children: <TextSpan>[
+        TextSpan(
+          text: item.price ?? '',
+          style: TextStyle(fontSize: 16, color: Colors.orange),
+        ),
+        TextSpan(
+          text: ' ' + (item.star ?? ''),
+          style: TextStyle(fontSize: 12, color: Colors.grey),
+        )
+      ]),
+    );
+  }
+
+  List<TextSpan> _keywordTextSpans(String word, String keyword) {
+    List<TextSpan> spans = [];
+    if (word == null || word.length == 0) return spans;
+    // 搜索关键字高亮忽略大小写
+    String wordL = word.toLowerCase(), keywordL = keyword.toLowerCase();
+    List<String> arr = wordL.split(keywordL);
+    TextStyle normalStyle = TextStyle(fontSize: 16, color: Colors.black87);
+    TextStyle keywordStyle = TextStyle(fontSize: 16, color: Colors.orange);
+    //'wordwoc'.split('w') -> [, ord, oc] @https://www.tutorialspoint.com/tpcg.php?p=wcpcUA
+    int preIndex = 0;
+    for (int i = 0; i < arr.length; i++) {
+      if (i != 0) {
+        // 搜索关键字高亮忽略大小写
+        preIndex = wordL.indexOf(keywordL, preIndex);
+        spans.add(TextSpan(
+            text: word.substring(preIndex, preIndex + keyword.length),
+            style: keywordStyle));
+      }
+      String val = arr[i];
+      if (val != null && val.length > 0) {
+        spans.add(TextSpan(text: val, style: normalStyle));
+      }
+    }
+    return spans;
   }
 }
