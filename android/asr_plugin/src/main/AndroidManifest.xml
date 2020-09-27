@@ -1,0 +1,19 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.asr_plugin">
+
+    /
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <application>
+        <meta-data android:name="com.baidu.speech.22762733"
+            android:value="9788136" />
+        <meta-data
+            android:name="com.baidu.speech.Xaox9UZaxnhTAS4Y21XXdjUn"
+            android:value="0GjQNO5H4pGPf9HyA3AmZEbz" />
+        <meta-data
+            android:name="com.baidu.speech.9INmZQ0Cu5Ljtdkok0fb95O5p2sPcNVn"
+            android:value="db981ef3ec647ba8a09b599ad7447a24" />
+    </application>
+</manifest>
