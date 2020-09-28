@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
 import "../pages/home.dart";
 import "../pages/search.dart";
-import "../pages/camera.dart";
 import "../pages/account.dart";
+import "../pages/travel.dart";
 
 class BotNavigationView extends StatefulWidget {
   BotNavigationView({Key key}) : super(key: key);
@@ -59,7 +59,8 @@ class _BotNavigationViewState extends State<BotNavigationView>
         children: <Widget>[
           HomePage(),
           SearchPage(hideLeft: true),
-          CameraPage(),
+          // CameraPage(),
+          TravelPage(),
           MyPage(),
         ],
         physics: NeverScrollableScrollPhysics(),

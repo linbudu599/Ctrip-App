@@ -16,7 +16,7 @@ class LoadingContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return coverPage
         ? (Stack(
-            children: <Widget>[child, isLoading ? _loadingView : null],
+            children: <Widget>[child, isLoading ? _loadingView : Container()],
           ))
         : (isLoading ? _loadingView : child);
   }
