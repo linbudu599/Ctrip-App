@@ -1,4 +1,6 @@
+import 'package:ctrip/widget/webview.dart';
 import "package:flutter/material.dart";
+import "package:ctrip/utils/constants.dart";
 
 class MyPage extends StatefulWidget {
   MyPage({Key key}) : super(key: key);
@@ -12,7 +14,12 @@ class MyPageState extends State<MyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-      child: Text("我的"),
+      child: WebView(
+        url: ACCOUNT_PAGE,
+        hideAppBar: true,
+        backForbid: true,
+        statusBarColor: '4c5bca',
+      ),
     ));
   }
 }

@@ -17,6 +17,8 @@ const int TRAVEl_PAGE_COUNT = 10;
 
 const String SEARCH_HINT = "搜索";
 
+const String ACCOUNT_PAGE = "https://m.ctrip.com/webapp/myctrip/";
+
 const List<String> TYPES = [
   'channelgroup',
   'channelgs',
