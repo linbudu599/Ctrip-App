@@ -19,3 +19,15 @@ flutter_splash 但是需要改mainAc文件, 教程中给的是java, 我这里的
 - SafeArea包裹, 类似于RN的SafeAreaView来进行适配
 - MediaQuery.of(context).padding 自己实现对安全区域控制
 - 前者简单, 后者灵活
+ 
+```dart
+final EdgeInsets padding = MediaQuery.of(context).padding;
+
+// ...
+padding: EdgeInsets.fromLTRB(0, padding.top, 0, padding.bottom);
+```
+
+- 安卓全面屏适配: 如果应用未做适配, 全屏区间长宽比必须在1.333-1.86间
+    
+    添加android: MaxAspectRatio
+    android.max_aspect中添加meta_data

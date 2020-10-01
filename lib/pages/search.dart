@@ -1,8 +1,10 @@
-import 'package:ctrip/model/search_model.dart';
-import 'package:ctrip/widget/webview.dart';
 import "package:flutter/material.dart";
+
+import 'package:ctrip/widget/webview.dart';
 import "package:ctrip/widget/search_bar.dart";
+
 import "package:ctrip/dao/search_dao.dart";
+import 'package:ctrip/model/search_model.dart';
 
 import "package:ctrip/utils/constants.dart";
 

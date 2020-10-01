@@ -1,8 +1,9 @@
 import "dart:convert";
 
-import 'package:ctrip/pages/search.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_swiper/flutter_swiper.dart';
+
+import 'package:ctrip/pages/search.dart';
 
 import 'package:ctrip/model/common_model.dart';
 import 'package:ctrip/model/grid_nav_model.dart';
@@ -38,6 +39,7 @@ class _HomePageState extends State<HomePage> {
 
   bool _loading = true;
 
+  // 顶部AppBar随着滚动透明度变化
   void _onScroll(double offset) {
     double alpha = offset / APPBAR_SCROLL_OFFSET_MAX;
     if (alpha < 0) {
@@ -57,23 +59,10 @@ class _HomePageState extends State<HomePage> {
     _fetchSync();
   }
 
-  // _fetch() {
-  //   HomeDao.fetch().then((value) {
-  //     setState(() {
-  //       resString = json.encode(value);
-  //     });
-  //   }).catchError((e) {
-  //     setState(() {
-  //       resString = e.toString();
-  //     });
-  //   });
-  // }
-
   Future<Null> _fetchSync() async {
     try {
       HomeModel model = await HomeDao.fetch();
       setState(() {
-        resString = json.encode(model.config);
         localNavList = model.localNavList;
         gridNavModel = model.gridNav;
         subNavList = model.subNavList;
@@ -81,9 +70,7 @@ class _HomePageState extends State<HomePage> {
         bannerList = model.bannerList;
       });
     } catch (e) {
-      setState(() {
-        resString = e.toString();
-      });
+      print(e);
     } finally {
       setState(() {
         _loading = false;
@@ -105,17 +92,25 @@ class _HomePageState extends State<HomePage> {
                 MediaQuery.removePadding(
                     removeTop: true,
                     context: context,
-                    // 监听滚动
                     child: RefreshIndicator(
                       onRefresh: _fetchSync,
                       child: NotificationListener(
-                          // ignore: missing_return
                           onNotification: (scrollNotification) {
-                            // 只监听最外层的ListView滚动
+                            // 只监听最外层的ListView滚动(depth)且滚动条更新(滚动中)
                             if (scrollNotification
                                     is ScrollUpdateNotification &&
                                 scrollNotification.depth == 0) {
                               _onScroll(scrollNotification.metrics.pixels);
+                            }
+                            // TODO: Content Finished Tooltip
+                            if (scrollNotification is ScrollEndNotification &&
+                                scrollNotification.metrics.extentAfter == 0) {
+                              print("Scroll to Bottom");
+                            }
+                            // TODO: Refresh Load More Tooltip
+                            if (scrollNotification is ScrollEndNotification &&
+                                scrollNotification.metrics.extentBefore == 0) {
+                              print("Scroll to Top");
                             }
                           },
                           child: _listView),
@@ -134,6 +129,7 @@ class _HomePageState extends State<HomePage> {
           itemBuilder: (BuildContext context, int idx) {
             String imgURL = bannerList[idx].icon;
 
+            // avoid [Inscure Resources] warning
             if (imgURL.startsWith("http://")) {
               imgURL = imgURL.replaceAll("http://", "https://");
             }
@@ -218,7 +214,7 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.fromLTRB(7, 0, 7, 4),
           child: SalesBox(salesBox: salesBox),
         ),
-        Container(height: 800, child: ListTile(title: Text(resString)))
+        Container(height: 5)
       ],
     );
   }

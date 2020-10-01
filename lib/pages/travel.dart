@@ -1,10 +1,8 @@
 import "package:flutter/material.dart";
-import "package:ctrip/utils/constants.dart";
-import 'package:ctrip/widget/webview.dart';
+
 import 'package:ctrip/model/travel_tab_model.dart';
-import 'package:ctrip/model/travel_model.dart';
 import 'package:ctrip/dao/travel_tab_dao.dart';
-import 'package:ctrip/dao/travel_dao.dart';
+
 import 'package:ctrip/pages/travel_tab_page.dart';
 
 class TravelPage extends StatefulWidget {
@@ -49,27 +47,32 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin {
         body: Column(children: <Widget>[
       Container(
           color: Colors.white,
-          padding: EdgeInsets.only(top: 30),
+          padding: EdgeInsets.fromLTRB(3, 20, 3, 5),
           child: TabBar(
               controller: _controller,
               isScrollable: true,
               labelColor: Colors.black,
-              labelPadding: EdgeInsets.fromLTRB(20, 0, 10, 5),
+              labelPadding: EdgeInsets.fromLTRB(15, 0, 15, 5),
               indicator: UnderlineTabIndicator(
                   borderSide: BorderSide(color: Color(0xff2fcfbb), width: 3),
                   insets: EdgeInsets.only(bottom: 10)),
               tabs: tabs
-                  .map<Tab>((TravelTab tab) => Tab(text: tab.labelName))
+                  .map<Tab>((TravelTab tab) => Tab(
+                        child: Text(
+                          tab.labelName,
+                          textAlign: TextAlign.start,
+                        ),
+                      ))
                   .toList())),
       Flexible(
           child: TabBarView(
               controller: _controller,
-              children: tabs.map((TravelTab tab) {
-                return TravelTabPage(
-                  travelURL: travelTabModel.url,
-                  groupChannelCode: tab.groupChannelCode,
-                );
-              }).toList()))
+              children: tabs
+                  .map((TravelTab tab) => TravelTabPage(
+                        travelURL: travelTabModel.url,
+                        groupChannelCode: tab.groupChannelCode,
+                      ))
+                  .toList()))
     ]));
   }
 }

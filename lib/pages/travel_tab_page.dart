@@ -1,11 +1,13 @@
-import 'package:ctrip/widget/loading.dart';
 import "package:flutter/material.dart";
-import "package:ctrip/utils/constants.dart";
+
+import 'package:ctrip/widget/loading.dart';
 import 'package:ctrip/widget/webview.dart';
-import 'package:ctrip/model/travel_tab_model.dart';
+
+import "package:ctrip/utils/constants.dart";
+
 import 'package:ctrip/model/travel_model.dart';
-import 'package:ctrip/dao/travel_tab_dao.dart';
 import 'package:ctrip/dao/travel_dao.dart';
+
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class TravelTabPage extends StatefulWidget {
@@ -20,7 +22,9 @@ class TravelTabPage extends StatefulWidget {
 }
 
 class _TravelTabPageState extends State<TravelTabPage>
-    with AutomaticKeepAliveClientMixin {
+    // 缓存页面
+    with
+        AutomaticKeepAliveClientMixin {
   List<TravelItem> travelItems;
   int pageIdx = 1;
   bool isLoading = true;
@@ -38,6 +42,7 @@ class _TravelTabPageState extends State<TravelTabPage>
     super.initState();
   }
 
+  // 同时供下拉刷新与首屏数据获取使用
   Future<Null> _loadData({loadMore = false}) {
     if (loadMore) {
       pageIdx++;
@@ -61,12 +66,12 @@ class _TravelTabPageState extends State<TravelTabPage>
     return null;
   }
 
-  Future<Null> _handleRefresh() async {
-    return _loadData();
-  }
+  Future<Null> _handleRefresh() async => _loadData();
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Scaffold(
         body: LoadingContainer(
             child: RefreshIndicator(
@@ -102,7 +107,7 @@ class _TravelTabPageState extends State<TravelTabPage>
   }
 
   @override
-  // bool get wantKeepAlive => throw UnimplementedError();
+  // 始终保活
   bool get wantKeepAlive => true;
 }
 
@@ -134,9 +139,9 @@ class TravelItemBuilder extends StatelessWidget {
             children: <Widget>[
               _itemImage(),
               Container(
-                padding: EdgeInsets.all(4),
+                padding: EdgeInsets.all(6),
                 child: Text(item.article.articleTitle,
-                    maxLines: 2,
+                    maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 14, color: Colors.black87)),
               ),
@@ -153,19 +158,19 @@ class TravelItemBuilder extends StatelessWidget {
       children: <Widget>[
         Image.network(item.article.images[0]?.dynamicUrl),
         Positioned(
-            bottom: 80,
-            left: 8,
+            bottom: 20,
+            left: 10,
             child: Container(
-              padding: EdgeInsets.fromLTRB(5, 1, 5, 1),
+              padding: EdgeInsets.fromLTRB(5, 1, 8, 3),
               decoration: BoxDecoration(
                 color: Colors.black54,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(12),
               ),
               child: Row(children: <Widget>[
                 Padding(
-                    padding: EdgeInsets.only(right: 3),
+                    padding: EdgeInsets.only(right: 2),
                     child:
-                        Icon(Icons.location_on, color: Colors.white, size: 12)),
+                        Icon(Icons.location_on, color: Colors.white, size: 14)),
                 LimitedBox(
                   maxWidth: 130,
                   child: Text(_position(),
@@ -180,9 +185,9 @@ class TravelItemBuilder extends StatelessWidget {
   }
 
   String _position() {
-    return item.article.pois == null || item.article.pois.length == 0
-        ? "未知"
-        : item.article.pois[0]?.poiName ?? "未知";
+    List<Pois> pois = item.article.pois;
+
+    return pois == null || pois.length == 0 ? "未知" : pois[0]?.poiName ?? "未知";
   }
 
   Widget _infoText() {
@@ -192,14 +197,15 @@ class TravelItemBuilder extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Row(children: <Widget>[
+            // 头像框裁剪
             PhysicalModel(
                 color: Colors.transparent,
                 clipBehavior: Clip.antiAlias,
                 borderRadius: BorderRadius.circular(12),
                 child: Image.network(
                     item.article.author?.coverImage?.dynamicUrl,
-                    width: 24,
-                    height: 24)),
+                    width: 26,
+                    height: 26)),
             Container(
               padding: EdgeInsets.all(5),
               width: 90,
@@ -215,14 +221,14 @@ class TravelItemBuilder extends StatelessWidget {
             children: <Widget>[
               Icon(
                 Icons.thumb_up,
-                size: 14,
+                size: 16,
                 color: Colors.grey,
               ),
               Padding(
-                padding: EdgeInsets.only(left: 3),
+                padding: EdgeInsets.fromLTRB(3, 0, 2, 0),
                 child: Text(
                   item.article.likeCount.toString(),
-                  style: TextStyle(fontSize: 10),
+                  style: TextStyle(fontSize: 12),
                 ),
               )
             ],

@@ -1,8 +1,16 @@
 import "package:flutter/material.dart";
-import "../pages/home.dart";
-import "../pages/search.dart";
-import "../pages/account.dart";
-import "../pages/travel.dart";
+import "package:ctrip/pages/home.dart";
+import "package:ctrip/pages/search.dart";
+import "package:ctrip/pages/account.dart";
+import "package:ctrip/pages/travel.dart";
+
+/*
+ * 常用的路由方案: 使用PageController的实例进行控制 
+ * 在PageView中注册页面后, 使用jumpToPage(i)进行控制
+ * 基于pageCount(下面的_idx)与PageController来使得保持同步
+ * 使用SingleTickerProviderStateMixin来实现动画切换效果
+ * 这样的话只会允许同时间一处setState重绘请求
+ */
 
 class BotNavigationView extends StatefulWidget {
   BotNavigationView({Key key}) : super(key: key);
@@ -13,8 +21,6 @@ class BotNavigationView extends StatefulWidget {
 
 class _BotNavigationViewState extends State<BotNavigationView>
     with SingleTickerProviderStateMixin {
-  final Color _defaultColor = Colors.grey;
-  final Color _activeColor = Colors.blue;
   int _idx = 0;
 
   PageController _controller = PageController(initialPage: 0);
@@ -35,31 +41,22 @@ class _BotNavigationViewState extends State<BotNavigationView>
   }
 
   @override
-  void deactivate() {
-    super.deactivate();
-  }
-
-  @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // 用于页面间滚动的widget
       body: PageView(
         pageSnapping: false,
         reverse: false,
-        onPageChanged: (int i) {
-          // print(i);
-        },
+        onPageChanged: (int i) {},
         controller: _controller,
         children: <Widget>[
           HomePage(),
           SearchPage(hideLeft: true),
-          // CameraPage(),
           TravelPage(),
           MyPage(),
         ],
@@ -75,46 +72,22 @@ class _BotNavigationViewState extends State<BotNavigationView>
           },
           type: BottomNavigationBarType.fixed,
           items: [
-            // TODO: should be used like this
-            // _buildItem(Icons.home, "首页", 0),
-            _buildItem("首页", 0),
-            _buildItem("搜索", 1),
-            _buildItem("旅拍", 2),
-            _buildItem("我的", 3),
+            _buildItem("首页", 0, icon: Icons.home),
+            _buildItem("搜索", 1, icon: Icons.search),
+            _buildItem("旅拍", 2, icon: Icons.camera_alt),
+            _buildItem("我的", 3, icon: Icons.account_circle),
           ]),
     );
   }
 
-  BottomNavigationBarItem _buildItem(
-    String title,
-    int idx,
-  ) {
-    IconData defaultIcon;
-    IconData activeIcon;
-    bool isSelected = _idx == idx;
-
-    switch (idx) {
-      case 0:
-        defaultIcon = Icons.home;
-        break;
-      case 1:
-        defaultIcon = Icons.search;
-        break;
-      case 2:
-        defaultIcon = Icons.camera_alt;
-        break;
-      case 3:
-        defaultIcon = Icons.account_circle;
-        break;
-    }
-// FIXME: 直接传入IconData数据不起作用
+  BottomNavigationBarItem _buildItem(String title, int idx, {IconData icon}) {
+    final Color _defaultColor = Colors.grey;
+    final Color _activeColor = Colors.blue;
+    // bool isSelected = _idx == idx;
     return BottomNavigationBarItem(
-      icon: Icon(defaultIcon,
-          // color: _defaultColor, size: isSelected ? 22.0 : 34.0),
-          color: _defaultColor),
-      activeIcon: Icon(defaultIcon, color: _activeColor),
-      title: Text(title,
-          style: TextStyle(color: !isSelected ? _defaultColor : _activeColor)),
+      icon: Icon(icon, color: _defaultColor),
+      activeIcon: Icon(icon, color: _activeColor),
+      label: title,
     );
   }
 }
