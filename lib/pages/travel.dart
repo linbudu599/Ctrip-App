@@ -47,15 +47,15 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin {
         body: Column(children: <Widget>[
       Container(
           color: Colors.white,
-          padding: EdgeInsets.fromLTRB(3, 20, 3, 5),
+          padding: const EdgeInsets.fromLTRB(3, 20, 3, 0),
           child: TabBar(
               controller: _controller,
               isScrollable: true,
               labelColor: Colors.black,
-              labelPadding: EdgeInsets.fromLTRB(15, 0, 15, 5),
+              labelPadding: const EdgeInsets.fromLTRB(15, 0, 15, 5),
               indicator: UnderlineTabIndicator(
                   borderSide: BorderSide(color: Color(0xff2fcfbb), width: 3),
-                  insets: EdgeInsets.only(bottom: 10)),
+                  insets: const EdgeInsets.only(bottom: 10)),
               tabs: tabs
                   .map<Tab>((TravelTab tab) => Tab(
                         child: Text(

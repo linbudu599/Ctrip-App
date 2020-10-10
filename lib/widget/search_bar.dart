@@ -84,7 +84,9 @@ class _SearchBarState extends State<SearchBar> {
           borderRadius: BorderRadius.circular(isNormal ? 5 : 15)),
       child: Row(
         children: <Widget>[
-          Icon(Icons.search, size: 20, color: iconColor),
+          Padding(
+              child: Icon(Icons.search, size: 20, color: iconColor),
+              padding: const EdgeInsets.only(top: 12)),
           Expanded(
               flex: 1,
               child: isNormal
@@ -97,7 +99,7 @@ class _SearchBarState extends State<SearchBar> {
                           color: Colors.black,
                           fontWeight: FontWeight.w300),
                       decoration: InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                          contentPadding: const EdgeInsets.fromLTRB(8, 0, 5, 5),
                           border: InputBorder.none,
                           hintText: widget.hint ?? "",
                           hintStyle: TextStyle(fontSize: 15)))
@@ -116,8 +118,11 @@ class _SearchBarState extends State<SearchBar> {
                   _onChanged("");
                 })
               : _tapWrapper(
-                  Icon(Icons.mic,
-                      size: 22, color: isNormal ? Colors.blue : Colors.grey),
+                  Padding(
+                    child: Icon(Icons.mic,
+                        size: 22, color: isNormal ? Colors.blue : Colors.grey),
+                    padding: const EdgeInsets.only(top: 14),
+                  ),
                   widget.handleSpeackClick)
         ],
       ),

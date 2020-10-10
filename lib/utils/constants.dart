@@ -1,3 +1,5 @@
+import "package:flutter/material.dart";
+
 const String HOME_URL =
     "https://www.devio.org/io/flutter_app/json/home_page.json";
 
@@ -40,4 +42,11 @@ const List<String> CHANNEL_TYPES = [
   'channelgs',
   'channelplane',
   'channeltrain',
+];
+
+const List<Map<String, dynamic>> NAVIGATOR_ITEM = [
+  {"title": "首页", "icon": Icons.home},
+  {"title": "搜索", "icon": Icons.search},
+  {"title": "旅拍", "icon": Icons.camera_alt},
+  {"title": "我的", "icon": Icons.account_circle}
 ];

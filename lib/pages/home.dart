@@ -1,7 +1,6 @@
-import "dart:convert";
-
 import "package:flutter/material.dart";
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:ctrip/pages/search.dart';
 
@@ -30,7 +29,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   double appBarOpacity = 0;
-  String resString = "";
   List<CommonModel> localNavList = [];
   List<CommonModel> bannerList = [];
   GridNavModel gridNavModel;
@@ -70,7 +68,7 @@ class _HomePageState extends State<HomePage> {
         bannerList = model.bannerList;
       });
     } catch (e) {
-      print(e);
+      print(e.toString());
     } finally {
       setState(() {
         _loading = false;
@@ -78,6 +76,17 @@ class _HomePageState extends State<HomePage> {
     }
 
     return null;
+  }
+
+  void _scrollTip({bool tipOnTop = true}) {
+    Fluttertoast.showToast(
+        msg: tipOnTop ? "下拉加载更多" : "到底了~",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: tipOnTop ? ToastGravity.TOP : ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.black38,
+        textColor: Colors.white,
+        fontSize: 14.0);
   }
 
   @override
@@ -102,15 +111,16 @@ class _HomePageState extends State<HomePage> {
                                 scrollNotification.depth == 0) {
                               _onScroll(scrollNotification.metrics.pixels);
                             }
-                            // TODO: Content Finished Tooltip
                             if (scrollNotification is ScrollEndNotification &&
                                 scrollNotification.metrics.extentAfter == 0) {
                               print("Scroll to Bottom");
+                              _scrollTip(tipOnTop: false);
                             }
                             // TODO: Refresh Load More Tooltip
                             if (scrollNotification is ScrollEndNotification &&
                                 scrollNotification.metrics.extentBefore == 0) {
                               print("Scroll to Top");
+                              _scrollTip();
                             }
                           },
                           child: _listView),

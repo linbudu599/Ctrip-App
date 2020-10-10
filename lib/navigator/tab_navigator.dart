@@ -1,8 +1,11 @@
 import "package:flutter/material.dart";
+
 import "package:ctrip/pages/home.dart";
 import "package:ctrip/pages/search.dart";
 import "package:ctrip/pages/account.dart";
 import "package:ctrip/pages/travel.dart";
+
+import "package:ctrip/utils/constants.dart";
 
 /*
  * 常用的路由方案: 使用PageController的实例进行控制 
@@ -64,6 +67,8 @@ class _BotNavigationViewState extends State<BotNavigationView>
       ),
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: _idx,
+          unselectedFontSize: 14.0,
+          selectedFontSize: 16.0,
           onTap: (int i) {
             _controller.jumpToPage(i);
             setState(() {
@@ -71,22 +76,21 @@ class _BotNavigationViewState extends State<BotNavigationView>
             });
           },
           type: BottomNavigationBarType.fixed,
-          items: [
-            _buildItem("首页", 0, icon: Icons.home),
-            _buildItem("搜索", 1, icon: Icons.search),
-            _buildItem("旅拍", 2, icon: Icons.camera_alt),
-            _buildItem("我的", 3, icon: Icons.account_circle),
-          ]),
+          items: List.generate(
+              NAVIGATOR_ITEM.length,
+              (index) => _buildItem(NAVIGATOR_ITEM[index]['title'], index,
+                  NAVIGATOR_ITEM[index]['icon']))),
     );
   }
 
-  BottomNavigationBarItem _buildItem(String title, int idx, {IconData icon}) {
+  BottomNavigationBarItem _buildItem(String title, int idx, IconData icon) {
+    // should do selected stuff in BottomNavigationBar Widget
     final Color _defaultColor = Colors.grey;
     final Color _activeColor = Colors.blue;
-    // bool isSelected = _idx == idx;
     return BottomNavigationBarItem(
       icon: Icon(icon, color: _defaultColor),
       activeIcon: Icon(icon, color: _activeColor),
+      // label will act with selected & unselected item
       label: title,
     );
   }
