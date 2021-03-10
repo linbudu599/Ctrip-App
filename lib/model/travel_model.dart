@@ -8,7 +8,8 @@ class TravelItemModel {
   TravelItemModel.fromJson(Map<String, dynamic> json) {
     totalCount = json['totalCount'];
     if (json['resultList'] != null) {
-      resultList = List<TravelItem>();
+      resultList = [];
+
       json['resultList'].forEach((v) {
         resultList.add(TravelItem.fromJson(v));
       });
@@ -113,7 +114,7 @@ class Article {
     articleTitle = json['articleTitle'];
     author = json['author'] != null ? Author.fromJson(json['author']) : null;
     if (json['images'] != null) {
-      images = List<Images>();
+      images = [];
       json['images'].forEach((v) {
         images.add(Images.fromJson(v));
       });
@@ -123,19 +124,19 @@ class Article {
     likeCount = json['likeCount'];
     commentCount = json['commentCount'];
     if (json['urls'] != null) {
-      urls = List<Urls>();
+      urls = [];
       json['urls'].forEach((v) {
         urls.add(Urls.fromJson(v));
       });
     }
     if (json['topics'] != null) {
-      topics = List<Topics>();
+      topics = [];
       json['topics'].forEach((v) {
         topics.add(Topics.fromJson(v));
       });
     }
     if (json['pois'] != null) {
-      pois = List<Pois>();
+      pois = [];
       json['pois'].forEach((v) {
         pois.add(Pois.fromJson(v));
       });

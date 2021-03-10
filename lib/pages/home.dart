@@ -122,6 +122,8 @@ class _HomePageState extends State<HomePage> {
                               print("Scroll to Top");
                               _scrollTip();
                             }
+
+                            return true;
                           },
                           child: _listView),
                     )),

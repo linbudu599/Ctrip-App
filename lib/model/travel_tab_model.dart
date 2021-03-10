@@ -12,7 +12,7 @@ class TravelTabModel {
     url = json['url'];
     params = json['params'];
     if (json['tabs'] != null) {
-      tabs = List<TravelTab>();
+      tabs = [];
       json['tabs'].forEach((v) {
         tabs.add(TravelTab.fromJson(v));
       });
